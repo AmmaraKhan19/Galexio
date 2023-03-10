@@ -7,8 +7,8 @@ export class News extends Component {
 
   static defaultProps = {
     language: '',
-    pagesize: 6,
-    category: ''
+    pagesize: 9,
+    category: 'general'
   }
 
   static propTypes = {
@@ -26,7 +26,7 @@ export class News extends Component {
     };
   }
 
-  async updateNews(pageNo){
+  async updateNews(){
     const url = `https://newsapi.org/v2/top-headlines?q=space&category=${this.props.category}&language=${this.props.language}&apiKey=72c0de6130f0495b90fee8bc985befe0&page=${this.state.page}&pageSize=${this.props.pagesize}`;
     this.setState({loading: true});
     let data = await fetch(url);
@@ -40,16 +40,7 @@ export class News extends Component {
   }
 
   async componentDidMount(){
-    let url = `https://newsapi.org/v2/top-headlines?q=space&category=${this.props.category}&language=${this.props.language}&apiKey=72c0de6130f0495b90fee8bc985befe0&pageSize=${this.props.pagesize}`;
-    this.setState({loading: true});
-    let data = await fetch(url);
-    let parsedData = await data.json()
-    console.log(parsedData);
-    this.setState({
-      articles: parsedData.articles,
-      totalResults: parsedData.totalResults,
-      loading: false
-    })
+    this.updateNews();
   }
 
   handleprevClick = async ()=>{
@@ -63,20 +54,25 @@ export class News extends Component {
     //   articles: parsedData.articles,
     //   loading: false
     // })
+    this.setState({page: this.state.page - 1});
+    this.updateNews();
+
   }
 
   handlenextClick = async ()=>{
-    if (!(this.state.page + 1 > Math.ceil(this.state.totalResults/this.props.pagesize))) {
-      // let url = `https://newsapi.org/v2/top-headlines?q=space&category=${this.props.category}&language=${this.props.language}&apiKey=72c0de6130f0495b90fee8bc985befe0&page=${this.state.page + 1}&pageSize=${this.props.pagesize}`;
-      // this.setState({loading: true});
-      // let data = await fetch(url);
-      // let parsedData = await data.json()
-      // this.setState({
-      //   page: this.state.page + 1,
-      //   articles: parsedData.articles,
-      //   loading: false
-      // })
-    }
+    // if (!(this.state.page + 1 > Math.ceil(this.state.totalResults/this.props.pagesize))) {
+    //     let url = `https://newsapi.org/v2/top-headlines?q=space&category=${this.props.category}&language=${this.props.language}&apiKey=72c0de6130f0495b90fee8bc985befe0&page=${this.state.page + 1}&pageSize=${this.props.pagesize}`;
+    //   this.setState({loading: true});
+    //   let data = await fetch(url);
+    //   let parsedData = await data.json()
+    //   this.setState({
+    //     page: this.state.page + 1,
+    //     articles: parsedData.articles,
+    //     loading: false
+    //   })
+    // }
+    this.setState({page: this.state.page + 1});
+    this.updateNews();
   }
 
   render() {
