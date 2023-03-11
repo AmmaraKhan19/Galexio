@@ -13,6 +13,7 @@ import LoadingBar from "react-top-loading-bar";
 
 export default class App extends Component {
   pagesize = 9;
+  apiKey = process.env.REACT_APP_NEWS_API
   state = {
     progress: 0
   }
@@ -28,10 +29,10 @@ export default class App extends Component {
           <Navbar />
           <LoadingBar height={3} color='red' progress={this.state.progress} />
           <Routes>
-            <Route element={<News setprogress={this.setprogress} pagesize = {this.pagesize} key='home' category="general" />} exact path='/' />
-            <Route element={<News setprogress={this.setprogress} pagesize = {this.pagesize} key='business' language="en" category="business" />} exact path='/business' />
-            <Route element={<News setprogress={this.setprogress} pagesize = {this.pagesize} key='science' language="en" category="science" />} exact path='/science' />
-            <Route element={<News setprogress={this.setprogress} pagesize = {this.pagesize} key='technology' language="en" category="technology" />} exact path='/technology' />
+            <Route element={<News setprogress={this.setprogress} apiKey = {this.apiKey} pagesize = {this.pagesize} key='home' category="general" />} exact path='/' />
+            <Route element={<News setprogress={this.setprogress} apiKey = {this.apiKey} pagesize = {this.pagesize} key='business' language="en" category="business" />} exact path='/business' />
+            <Route element={<News setprogress={this.setprogress} apiKey = {this.apiKey} pagesize = {this.pagesize} key='science' language="en" category="science" />} exact path='/science' />
+            <Route element={<News setprogress={this.setprogress} apiKey = {this.apiKey} pagesize = {this.pagesize} key='technology' language="en" category="technology" />} exact path='/technology' />
           </Routes>
         </Router>
       </div>
