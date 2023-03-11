@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import NewsItem from "./NewsItem";
 import Spinner from "./Spinner";
-import PropTypes from 'prop-types'
-import InfiniteScroll from "react-infinite-scroll-component";
+import PropTypes from 'prop-types'; //to use multiple prop-types as dwefault
+import InfiniteScroll from "react-infinite-scroll-component"; //for infinite scrolling of page
+
 
 export class News extends Component {
 
@@ -34,16 +35,19 @@ export class News extends Component {
   }
 
   updateNews = async () => {
+    this.props.setprogress(30);
     const url = `https://newsapi.org/v2/top-headlines?q=space&category=${this.props.category}&language=${this.props.language}&apiKey=72c0de6130f0495b90fee8bc985befe0&page=${this.state.page}&pageSize=${this.props.pagesize}`;
     this.setState({loading: true});
     let data = await fetch(url);
+    this.props.setprogress(50);
     let parsedData = await data.json()
-    console.log(parsedData);
+    this.props.setprogress(70);
     this.setState({
       articles: parsedData.articles,
       totalResults: parsedData.totalResults,
       loading: false,
     })
+    this.props.setprogress(100);
   }
 
   async componentDidMount(){
@@ -61,7 +65,7 @@ export class News extends Component {
       articles: this.state.articles.concat( parsedData.articles),
       totalResults: parsedData.totalResults,
       loading: false,
-    })  
+    })
   };
 
   render() {
@@ -71,10 +75,10 @@ export class News extends Component {
         <h1 className="text-center my-2">Latest - {this.capitalizeFirstletter(this.props.category)}</h1>
         {this.state.loading && <Spinner />}
         <InfiniteScroll 
-        dataLength={this.state.articles.length} 
-        next={this.fetchMoreData} 
-        hasMore={this.state.articles.length !== this.state.totalResults} 
-        loader={<Spinner />}>
+        dataLength = {this.state.articles.length} 
+        next = {this.fetchMoreData} 
+        hasMore = {this.state.articles.length !== this.state.totalResults} 
+        loader = {<Spinner />}>
           <div className="container">
             <div className="row">
               {this.state.articles.map((element)=> {
