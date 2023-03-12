@@ -1,17 +1,11 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-export class NewsItem extends Component {
-
-  imageFail = (event) => {
-    event.target.src = "https://cdn.mos.cms.futurecdn.net/838Uzpa69pphA8Vzq7GJo9-1200-80.jpg"
- }
-  
-  render() {
-    let {title, description, imgurl, newsurl, author, date, source} = this.props;
+const NewsItem = (props) => {
+  let {title, description, imgurl, newsurl, author, date, source} = props;
     return (
       <div className='my-3'>
         <div className="card" >
-          <img src={!imgurl?"https://cdn.mos.cms.futurecdn.net/838Uzpa69pphA8Vzq7GJo9-1200-80.jpg":imgurl} onError={this.imageFail} className="card-img-top" alt="..." />
+          <img src={!imgurl?"https://cdn.mos.cms.futurecdn.net/838Uzpa69pphA8Vzq7GJo9-1200-80.jpg":imgurl} onError={'https://cdn.mos.cms.futurecdn.net/838Uzpa69pphA8Vzq7GJo9-1200-80.jpg'} className="card-img-top" alt="..." />
           <div className="card-body">
             <h5 className="card-title">{title}</h5>
             <h6 className="card-text">{description}</h6>
@@ -23,7 +17,6 @@ export class NewsItem extends Component {
         </div>
       </div>
     )
-  }
 }
 
-export default NewsItem
+export default NewsItem;
